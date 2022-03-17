@@ -1,0 +1,160 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+
+        <div id="all-content">
+
+            <div id="traffic-light-content">
+
+                <div class="traffic-lights-box">
+                    <div class="traffic-lights">
+                        <div id="red-light"></div>
+                        <div id="amber-light"></div>
+                        <div id="green-light"></div>
+                    </div>
+                </div>
+
+                <div class="light-desc">
+                    <p style="text-transform: uppercase;"><strong>Light info</strong></p>
+                    <p id="light-desc-text"></p>
+                </div>
+
+                
+
+            </div>
+
+            <div id="main-content">
+                <h1 style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Traffic Lights</h1>
+                <p>Traffic lights automatically control the flow of traffic at junctions. They ease the flow of traffic by alternating the priority in which vehicles may proceed. This allows vehicles coming from one direction to flow freely, while vehicles approaching from another direction are held back to wait their turn. Drivers must approach traffic light controlled junctions with caution and be prepared for the lights to change.</p>
+                <p>As our roads are becoming increasingly busier, we are seeing more traffic lights to help control the flow of traffic, ultimately keeping our roads safer. In the UK, you will find traffic lights at junctions, pedestrian crossings and roundabouts. You may also find temporary traffic lights near roadworks.</p>
+                <p style="font-style: italic; text-align: right;"><b>Source text: </b><a href="https://theorytest.org.uk/traffic-lights/">https://theorytest.org.uk/traffic-lights/</a></p>
+                <p>The sequence of lights is as followed:</p>
+                <ol>
+                    <li id="li-red">Red</li>
+                    <li id="li-red-amb">Red and Amber</li>
+                    <li id="li-green">Green</li>
+                    <li id="li-amber">Amber</li>
+                </ol>
+
+                <div class="all-buttons">
+                    <button id="nextBtn" onclick="nextSequence()">Next sequence</button>
+                    <button id="autoBtn" onclick="autoSequence()">Automatic sequence</button>
+                    <button id="stopBtn" onclick="stopBtnClick()">Stop auto sequence</button>
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+
+    <script>
+ 
+    
+        function redLight() {
+            document.getElementById("red-light").style.backgroundColor = "red";
+            document.getElementById("light-desc-text").innerHTML = "Red: Stop and wait at the stop line."
+            greyAmberLight();
+            greyGreenLight();
+        }
+
+        function amberLight() {
+            document.getElementById("amber-light").style.backgroundColor = "#FFBF00";
+            document.getElementById("light-desc-text").innerHTML = "Amber: Stop. If you have already crossed the stop line when the amber light appears or are positioned close to the stop line where stopping may be dangerous, you should proceed.."
+            greyRedLight();
+            greyGreenLight(); 
+        }
+
+        function greenLight() {
+            document.getElementById("green-light").style.backgroundColor = "green";            
+            document.getElementById("light-desc-text").innerHTML = "Green: You can go if it is safe to do so. Give way to any pedestrians who are crossing."
+            greyRedLight();
+            greyAmberLight();
+        }
+
+        function redAmberLight() {
+            document.getElementById("red-light").style.backgroundColor = "red";
+            document.getElementById("amber-light").style.backgroundColor = "#FFBF00";
+            document.getElementById("light-desc-text").innerHTML = "Red and Amber: Prepare to move but wait until the green shows to set off."
+            greyGreenLight();
+        }
+
+        function greyRedLight() {
+            document.getElementById("red-light").style.backgroundColor = "grey";
+        }
+        
+        function greyAmberLight() {
+            document.getElementById("amber-light").style.backgroundColor = "grey";
+        }
+
+        function greyGreenLight() {
+            document.getElementById("green-light").style.backgroundColor = "grey";
+        }
+
+        
+        var x = 0;
+        var inc = 1000;
+        let flag = false;
+        let y = -1;
+
+        function stopBtnClick() {
+            flag = flag ? false : true;
+            console.log(flag);
+        }
+
+        
+        function nextSequence() {
+            y += 1;
+            nextSequencePointer = y % 4;
+
+            switch(nextSequencePointer) {
+                case 0:
+                    redLight();
+                    break;
+                case 1:
+                    redAmberLight();
+                    break;
+                case 2:
+                    greenLight();
+                    break;
+                case 3:
+                    amberLight();
+                    break;
+            }
+        }
+
+
+        function autoSequence() {
+
+            console.log("auto sequence 1");
+    
+            for (let i=0; i<5; i++) {
+                var showRed = setTimeout(redLight,x);
+                x += inc;
+
+                var showRedAmber = setTimeout(redAmberLight,x);
+                x += inc;
+
+                var showGreen = setTimeout(greenLight,x);
+                x += inc;
+
+                var showAmber = setTimeout(amberLight,x);
+                x += inc;
+
+                console.log("auto sequence in action");
+
+                if (flag === true) {
+                    break;
+                }
+                
+            }
+
+            greyAmberLight();
+        }
+
+        </script>
+
+        
+</html>
